@@ -1,8 +1,10 @@
 .component_wrapper {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem;
-  border: 2px solid blue;
+  padding: 2rem 1rem;
+  /* border: 2px solid blue; */
+  border-bottom: 2px solid var(--primary-dark);
   height: 60px;
   width: 100%;
 }

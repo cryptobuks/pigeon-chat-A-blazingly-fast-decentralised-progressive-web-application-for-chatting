@@ -1,8 +1,10 @@
 :root {
-  --primary-dark: #fff;
-  --secondary-dark: #fff;
-  --primary-light: #ddd;
-  --secondary-light: #ddd;
+  --primary-dark: #31087b;
+  --secondary-dark: #7a4495;
+  --primary-light: #fa2fb5;
+  --secondary-light: #ff8fb1;
+  --primary-font: rgb(6, 4, 4);
+  --secondary-font: rgb(206, 206, 206);
 }
 html,
 body {
@@ -25,7 +27,6 @@ a {
 /* Global classes */
 .container {
   /* Hugs the page */
-  border: 2px solid red;
   width: 100vw;
   height: 100vh;
   display: flex;

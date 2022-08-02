@@ -1,0 +1,17 @@
+.component_wrapper {
+  width: 100%;
+  display: flex;
+  border: 1px solid var(--primary-dark);
+  padding: 0.25rem;
+  border-radius: 1rem;
+}
+
+.message_input {
+  width: 100%;
+  border: none;
+  font-size: 1rem;
+}
+
+.message_input:focus {
+  outline: none;
+}
