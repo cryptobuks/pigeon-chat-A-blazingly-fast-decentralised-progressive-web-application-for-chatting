@@ -3,6 +3,7 @@ import { useGunDB } from "../../context/GunDB/";
 import { useRouter } from "next/router";
 // import createNewUser from "../../utils/gunDB/createNewUser";
 import { createNewUser } from "../../utils/adapters/gunDBAdapters";
+import { useFeedback } from "../../context/Feedback";
 
 const useSignupState = () => {
   const [userName, setUserName] = useState(null);
@@ -11,8 +12,25 @@ const useSignupState = () => {
     message: "",
     isError: false,
   });
+
+  const { handleFeedbackConfigUpdate } = useFeedback();
   const clientRouter = useRouter();
   const { userDBRef } = useGunDB();
+
+  useEffect(() => {
+    // if (authError.isError) {
+    let feedbackObject = {
+      open: signupError.isError,
+      message: "There was an error registring the user",
+      type: "error",
+      autoHide: true,
+      autoHideTimeOut: 3000,
+      toggleOpenCloseHandler: () =>
+        setSignupError({ ...signupError, isError: false }),
+    };
+    handleFeedbackConfigUpdate("signup", feedbackObject);
+    // }
+  }, [signupError]);
 
   const handleUserNameOnChange = (e) => {
     setUserName(e.currentTarget.value);

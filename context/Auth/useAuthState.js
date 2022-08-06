@@ -28,19 +28,24 @@ const useAuthState = () => {
   const [userDetails, setUserDetails] = useState(initialUserState);
   const [authError, setAuthError] = useState(initialErrorState);
   const [authLoading, setAuthLoading] = useState(true);
+  const [authRedirect, setAuthRedirect] = useState(false);
   const { userDBRef } = useGunDB();
   const clientRouter = useRouter();
 
+  console.log("Yawa...", userDetails);
+
   useEffect(() => {
+    //client.push doesn't run this
     setAuthLoading(true);
     //set user details based on exisiting session, if any
     (async () => {
       if (userDetails.alias === null || userDetails.alias.length === 0) {
-        console.log("Session details are present...");
+        console.log("Session details are not present...");
         let isSession = await checkUserSession(userDBRef);
         if (isSession) {
           console.log("Setting user details from session...");
-          setUserDetails(await getUserDetailsFromDB(userDBRef));
+          let sessionUserDetails = await getUserDetailsFromDB(userDBRef);
+          setUserDetails(sessionUserDetails);
         } else {
           console.log('Setting user details as "no user"..');
           setUserDetails(userNotPresentState);
@@ -48,23 +53,25 @@ const useAuthState = () => {
       }
       setAuthLoading(false);
     })();
-  }, [userDBRef]);
+  }, [userDBRef, authRedirect]);
 
   const handleUserLogout = () => {
-    console.log(`Loggin out ${userDetails.alias}...`);
     logoutUser(userDBRef);
     setUserDetails(userNotPresentState);
     clientRouter.push("/login");
   };
 
-  const handleAuthenticationCallback = (userObject) => {
+  const handleAuthenticationCallback = async (userObject) => {
     //if authentication fails
     if (userObject.err) {
       setAuthError({ message: "Invalid Credentials", isError: true });
       return;
     }
     clientRouter.push("/chat");
+    let sessionUserDetails = await getUserDetailsFromDB(userDBRef);
+    setUserDetails(sessionUserDetails);
   };
+
   const handleUserLogin = (userName, password) => {
     authenticateUser(
       { userName, password },
@@ -77,6 +84,8 @@ const useAuthState = () => {
     userDetails,
     authError,
     authLoading,
+    setAuthRedirect,
+    setAuthError,
     setUserDetails,
     handleUserLogout,
     handleUserLogin,

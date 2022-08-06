@@ -19,7 +19,6 @@ const SingupView = () => {
     <div className={styles.page_wrapper}>
       <main className={styles.form_wrapper}>
         <MainHeading text="Sign in to a blazingly fast experience" />
-        {signupError.isError && <h4>{signupError.message}</h4>}
         <FormInput value={userName || ""} onChange={handleUserNameOnChange} />
         <FormInput
           value={password || ""}

@@ -9,7 +9,6 @@ const LoginView = () => {
   let {
     userName,
     password,
-    authError,
     handleUserNameOnChange,
     handlePasswordOnChange,
     handleOnLogin,
@@ -18,7 +17,6 @@ const LoginView = () => {
     <div className={styles.page_wrapper}>
       <main className={styles.form_wrapper}>
         <MainHeading text="Login to your profile" />
-        {authError.isError && <h3>{authError.message}</h3>}
         <FormInput
           label="Your username "
           value={userName || ""}
