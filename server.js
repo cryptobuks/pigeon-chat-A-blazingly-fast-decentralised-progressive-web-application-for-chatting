@@ -4,8 +4,8 @@ const app = express();
 
 app.use(Gun.serve);
 
-const server = app.listen(5000, () => {
-  console.log("Server running on ....", 5000);
+const server = app.listen(6000, () => {
+  console.log("Server running on ....", 6000);
 });
 
 Gun({ web: server });
